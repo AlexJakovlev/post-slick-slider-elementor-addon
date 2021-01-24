@@ -1,0 +1,177 @@
+.carousel {
+    background-color: #ededed;
+    padding: 81px 50px 58px;
+}
+
+.carousel h3 {
+    font-family: BebasNeue, AdobeInvisFont, MyriadPro-Regular;
+    font-weight: bold;
+    font-size: 40pt;
+    color: #000000;
+    text-transform: uppercase;
+    margin: 0 0 112px 32px;
+}
+
+.multiple-items {
+    margin-bottom: 97px;
+}
+
+.wrapper {
+    width: 348px;
+    margin-right: 27px;
+}
+
+.wrapper img {
+    display: block;
+    width: 216px;
+    height: 216px;
+    border-radius: 50%;
+}
+
+.content {
+    width: 100%;
+    margin-top: 36px;
+}
+
+.content h5 {
+    font-family: BebasNeue, AdobeInvisFont, MyriadPro-Regular;
+    font-weight: bold;
+    font-size: 24px;
+    color: #000000;
+    text-transform: uppercase;
+    margin: 0 0 18px;
+}
+
+.content p {
+    font-family: Formular, AdobeInvisFont, MyriadPro-Regular;
+    font-weight: bold;
+    font-size: 16px;
+    color: #000000;
+    margin: 0 0 18px;
+}
+
+.slick-track{
+    display: flex;
+}
+.slick-list{
+    overflow: hidden;
+}
+/*конкретный слайдер*/
+.slider {
+    position: relative;;
+}
+.slider .slick-arrow {
+    top: 50%;
+    position: absolute;
+    z-index: 10;
+    font-size: 0;
+    width: 60px;
+    height: 30px;
+    border: none;
+}
+.slider .slick-arrow.slick-prev {
+    left: 0;
+    background: url("./image/strelochki-02.svg") 0 0 /100% no-repeat;
+}
+.slider .slick-arrow.slick-next {
+    right: 0;
+    background: url("./image/strelochki-03.svg")  0 0 /100% no-repeat;
+}
+.slider .slick-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.slider .slick-dots li {
+    list-style: none;
+}
+.slider .slick-dots button {
+    font-size: 0;
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    background-color: black;
+    border-radius: 50%;
+}
+.slider .slick-dots li.slick-active button{
+    background-color: blue;
+}
+.slider .slick-arrow {
+    width: 22px;
+    height: 14px;
+}
+
+.slider .slick-arrow.slick-prev {
+    left: 29px;
+    top: -80px;
+}
+
+.slider .slick-arrow.slick-next {
+    left: 63px;
+    top: -80px;
+}
+
+
+
+/* -----
+.wpcap-grid-container .wpcap-post {
+    overflow: hidden;
+}
+.wp-cap_meta_badge{
+    position: absolute;
+}
+
+.active {
+    background-color: black!important;
+}offline
+.post-grid-text-wrap + p {
+    overflow: hidden;
+}
+
+.wpcap-grid-container .wpcap-post a.read-more-btn{
+	display: block;
+}
+
+.wpcap-grid-container .post-grid-thumbnail{
+	margin-bottom: 20px;
+}
+
+.wpcap-grid-container .post-grid-meta{
+	margin-bottom: 10px;
+}
+
+.wpcap-grid-container .wpcap-post .post-grid-meta span + span:before {
+    margin-left: 2px;
+    margin-right: 4px;
+}
+
+.grid-meta-bottom .post-grid-text-wrap {
+	border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.grid-meta-bottom .wpcap-post {
+    padding: 20px 20px 20px 20px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.15);
+}
+
+.elementor-widget-elementor-blog-posts .wpcap-grid .wpcap-grid-container .wpcap-post,
+.elementor-widget-elementor-blog-posts .wpcap-grid .wpcap-grid-container .wpcap-post:hover{
+    background: transparent;
+    margin-top: 0;
+}
+
+.elementor-widget-elementor-blog-posts .wpcap-grid .wpcap-grid-container .wpcap-post .title, 
+.elementor-widget-elementor-blog-posts .wpcap-grid .wpcap-grid-container .wpcap-post .title > a{
+    color: #333333;
+    margin: 5px 0;
+    padding: 5px 0;
+}
+
+.elementor-widget-elementor-blog-posts .wpcap-grid .wpcap-grid-container .wpcap-post .post-grid-excerpt p,
+.elementor-widget-elementor-blog-posts .wpcap-grid .wpcap-grid-container .wpcap-post a.read-more-btn,
+.elementor-widget-elementor-blog-posts .wpcap-grid .wpcap-grid-container .wpcap-post .post-grid-meta span{
+    color: #707070; 
+    font-weight: 400;
+}
