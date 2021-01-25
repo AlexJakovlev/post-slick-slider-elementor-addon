@@ -54,12 +54,22 @@ class Elementor_Post_Slick_Slider_Main {
 
     public function widget_scripts()
     {
-        add_action( 'elementor/widget/render_content', function( ));
+        add_action( 'elementor/widget/render_content', function($content ) {
+//        $p =  plugins_url('/assets/js/slick.min.js', __FILE__);
         wp_register_script('posts-slick-slider-addonss', plugins_url('/assets/js/slick.min.js', __FILE__), array('jquery'));
         wp_register_script('posts-slick-slider-addon', plugins_url('/assets/js/my_script.js', __FILE__), array('posts-slick-slider-addonss'));
         wp_enqueue_script('posts-slick-slider-addonss');
         wp_enqueue_script('posts-slick-slider-addon');
-//    });
+        return $content;
+        },10, 1 );
+        add_action( 'elementor/frontend/before_enqueue_scripts', function() {
+            wp_register_script('posts-slick-slider-addonss', plugins_url('/assets/js/slick.min.js', __FILE__), array('jquery'));
+            wp_register_script('posts-slick-slider-addon', plugins_url('/assets/js/my_script_tf.js', __FILE__), array('posts-slick-slider-addonss'));
+            wp_enqueue_script('posts-slick-slider-addonss');
+            wp_enqueue_script('posts-slick-slider-addon');
+
+        });
+
     }
 
 	/**
@@ -93,9 +103,9 @@ class Elementor_Post_Slick_Slider_Main {
 	public function register_widget_category( $elements_manager ) {
 
 		$elements_manager->add_category(
-			'aj-items',
+			'wpcap-items',
 			[
-				'title' => __( 'AJ Elements', 'post-grid-elementor-addon' ),
+				'title' => __( 'WPCap Elements', 'post-grid-elementor-addon' ),
 				'icon' => 'fa fa-plug',
 			]
 		);
