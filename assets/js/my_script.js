@@ -1,35 +1,23 @@
-console.log("скрипт загружен ");
+// console.log("скрипт загружен 0");
 
 jQuery(document).ready(function ($) {
-    console.log("запущен");
-    var items = $('.slider');
+    // console.log("запущен 0");
+    var items = $('.pssa');
+    // console.log(items);
     for (var i of items) {
-        console.log(i.getAttribute('id'));
+        // console.log(i.getAttribute('id'));
         // $(i).removeClass('slider');
         var clss = i.getAttribute('id').toString();
         $(i).addClass(clss);
-        $('.'+clss).slick({
-            dots: true,
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            speed: 500,
-            easing: 'easy',
-            responsive: [
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 2,
-                    }
-                }],
-            // appendArrows: $(".content_arrow_slick"),
-
-
-        });
+        var data_pss =  JSON.parse(i.getAttribute('data-set-ss'));
+        // console.log(i.getAttribute('data-set-ss'));
+        // console.log(data_pss);
+        $('.'+clss).slick(data_pss);
     }
     // elementorFrontend.hooks.addAction( 'frontend/element_ready/widget', function( $scope ) {
     //     console.log("element ready ");
     //     console.log($scope);
-
+    //
     //
     // } );
 });

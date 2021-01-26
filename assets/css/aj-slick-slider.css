@@ -1,66 +1,77 @@
-.carousel {
-    background-color: #ededed;
+.carousel-wrapper {
+    /*background-color: #ededed;*/
     padding: 81px 50px 58px;
 }
-
+/*.wrapper-in {*/
+/*    padding-right: 27px;*/
+/*}*/
+.post-wrapper{
+    padding: 30px 17px 26px 14px;
+}
 .carousel h3 {
     font-family: BebasNeue, AdobeInvisFont, MyriadPro-Regular;
     font-weight: bold;
-    font-size: 40pt;
+    font-size: 40px;
     color: #000000;
     text-transform: uppercase;
     margin: 0 0 112px 32px;
 }
-
+/*.company{*/
+/*    font-family: Akrobat-Regular, AdobeInvisFont, MyriadPro-Regular;*/
+/*    font-weight: 400;*/
+/*    font-size: 18px;*/
+/*    color: #000000;*/
+/*    margin: 0 0 19px;*/
+/*}*/
 .multiple-items {
     margin-bottom: 97px;
 }
 
 .wrapper {
     width: 348px;
-    margin-right: 27px;
 }
-
+.wrapper_img {
+    width: 100%;
+    display:flex;
+    justify-content: start;
+}
 .wrapper img {
-    display: block;
-    width: 216px;
-    height: 216px;
+    /*display: block;*/
+    /*width: 216px;*/
+    /*height: 216px;*/
     border-radius: 50%;
 }
 
-.content {
+.content_text{
     width: 100%;
-    margin-top: 36px;
-}
 
-.content h5 {
-    font-family: BebasNeue, AdobeInvisFont, MyriadPro-Regular;
-    font-weight: bold;
-    font-size: 24px;
-    color: #000000;
-    text-transform: uppercase;
-    margin: 0 0 18px;
 }
-
-.content p {
-    font-family: Formular, AdobeInvisFont, MyriadPro-Regular;
-    font-weight: bold;
-    font-size: 16px;
-    color: #000000;
-    margin: 0 0 18px;
+/*.pssa .wrapper-in {*/
+/*    !*box-shadow: 0px 0px 8px 0px rgba(34, 60, 80, 0.5);*!*/
+/*    !*padding: 10px;*!*/
+/*}*/
+.pssa article {
+    margin: 5px 13px;
 }
+/*.content_text p {*/
+/*    font-family: Formular, AdobeInvisFont, MyriadPro-Regular;*/
+/*    font-weight: bold;*/
+/*    font-size: 16px;*/
+/*    color: #000000;*/
+/*    margin: 0 0 18px;*/
+/*}*/
 
 .slick-track{
     display: flex;
 }
-.slick-list{
+.pssa. .slick-list{
     overflow: hidden;
 }
 /*конкретный слайдер*/
-.slider {
+.pssa {
     position: relative;;
 }
-.slider .slick-arrow {
+.pssa .slick-arrow {
     top: 50%;
     position: absolute;
     z-index: 10;
@@ -69,57 +80,53 @@
     height: 30px;
     border: none;
 }
-.slider .slick-arrow.slick-prev {
+.pssa .slick-arrow.slick-prev {
     left: 0;
     background: url("./image/strelochki-02.svg") 0 0 /100% no-repeat;
 }
-.slider .slick-arrow.slick-next {
+.pssa .slick-arrow.slick-next {
     right: 0;
     background: url("./image/strelochki-03.svg")  0 0 /100% no-repeat;
 }
-.slider .slick-dots {
+.pssa .slick-dots {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.slider .slick-dots li {
+.pssa .slick-dots li {
     list-style: none;
+    margin-top: 25px;
 }
-.slider .slick-dots button {
-    font-size: 0!important;
-    height: 10px!important;
-    width: 10px!important;
-    margin: 0 5px!important;
-    background-color: grey!important;
+.pssa .slick-dots button {
+    font-size: 0;
+    height: 11px;
+    width: 11px;
+    margin: 0 5px;
+    background-color: #ededed;
     border-radius: 50%;
 }
-.slider .slick-dots li.slick-active button{
-    background-color: black!important;
-}
-.slider .slick-dots li button:before{
-    display:none;
-}
-.slider .slick-dots li.slick-active button:before {
-display: none!important;
-}
-.slider .slick-dots li.slick-active button:hover{
+.pssa .slick-dots li button:before {
 
+    content: none;
 }
-
-.slider .slick-arrow {
+.pssa .slick-dots li.slick-active button{
+    background-color: #c6c6c6;
+}
+.pssa .slick-arrow {
     width: 22px;
     height: 14px;
 }
 
-.slider .slick-arrow.slick-prev {
+.pssa .slick-arrow.slick-prev {
     left: 29px;
     top: -80px;
 }
 
-.slider .slick-arrow.slick-next {
+.pssa .slick-arrow.slick-next {
     left: 63px;
     top: -80px;
 }
+
 
 
 

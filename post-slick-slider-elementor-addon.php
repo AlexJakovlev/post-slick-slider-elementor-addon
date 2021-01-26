@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Post Slick  Slider Elementor Addons
- * Description: Elementor page builder addon to display posts in the grid. Useful for generating post grid from your blog posts with multiple options.
+ * Description: Elementor page builder addon to display posts in slider. Useful for generating posts slider from your blog posts with multiple options.
  * Plugin URI: https://www.wpconcern.com/downloads/post-grid-elementor-addon/
  * Version: 1.0.7
  * Author: wpconcern

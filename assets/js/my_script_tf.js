@@ -1,28 +1,26 @@
-console.log("скрипт загружен tf");
+console.log("скрипт загружен 1");
 
 jQuery(document).ready(function ($) {
-    console.log("запущен");
-
-    elementorFrontend.hooks.addAction( 'frontend/element_ready/widget', function( $scope ) {
+    console.log("запущен tf");
+//     //
+    elementorFrontend.hooks.addAction('frontend/element_ready/widget', function ($scope) {
         console.log("element ready");
-        console.log($scope);
-        $('.slider').slick({
-            dots: true,
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            speed: 500,
-            easing: 'easy',
-            responsive: [
-                {
-                    breakpoint: 768,
-                    settings: {
-                        slidesToShow: 2,
-                    }
-                }],
-            // appendArrows: $(".content_arrow_slick"),
 
+        var items = $('.pssa');
+        // console.log(items);
+        var z=0;
+        for (var i of items) {
+            // console.log(i.getAttribute('id'));
+            // $(i).removeClass('slider');
+            var clss = i.getAttribute('id').toString();
+            // console.log(clss);
+            $(i).addClass(clss);
+            var data_pss =  JSON.parse(i.getAttribute('data-set-ss'));
+            // console.log(i.getAttribute('data-set-ss'));
+            console.log(data_pss);
+            // console.log(++z);
+            $('.'+clss).slick(data_pss);
+        }
 
-        });
-
-    } );
+    });
 });
