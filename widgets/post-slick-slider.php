@@ -18,6 +18,7 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
  */
 class Elementor_Post_Slick_Slider_Widget extends Widget_Base
 {
+    private $ids = '';
 
     public function get_name()
     {
@@ -37,6 +38,36 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
     public function get_categories()
     {
         return ['AJ'];
+    }
+
+//    public function hexToStr()
+//    {
+//        $continue = true;
+//        $hex = hash('md5', uniqid('', true), false);
+//        $strr = '';
+////        while ($continue) {
+//
+//            for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
+//                $strr .= chr(hexdec($hex[$i] . $hex[$i + 1]));
+//
+//            }
+////            $re = '/[a-zA-Z]+/';
+////            preg_match_all($re, $strr, $matches, PREG_SET_ORDER, 0);
+////            $continue = false;
+////        }
+//        return "ss".$strr;
+//    }
+
+    public function __construct($data = [], $args = null)
+    {
+        parent::__construct($data, $args);
+//        = $this->hexToStr();
+        if (!wp_doing_ajax()) {
+            if (count($data) > 0) {
+                $this->ids = $data['id'] !== null ? 'tt' . $data['id'] : '';
+            }
+        }
+
     }
 
     private function wpcap_get_all_post_categories()
@@ -72,6 +103,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
 
     protected function _register_controls()
     {
+//        $this->ss = $this->get_stack();
 
         $this->layout_options();
         $this->style_options();
@@ -82,7 +114,6 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
 
     protected function layout_options()
     {
-
         $this->section_layout_options();
         $this->section_slick_slider_options();
         $this->section_query_options();
@@ -93,8 +124,10 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
     {
         $this->section_layout_style();
         $this->section_style_slider_box();
+        $this->section_style_arrow();
         $this->section_style_image();
         $this->section_style_content();
+//        die;
     }
 
     protected function extended_option()
@@ -106,7 +139,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
     {
         $name = 'image';
         $label = ucfirst($name);
-        $class = '.pssa img';
+        $class = ' img';
 
         $this->start_controls_section(
             'section_image_style',
@@ -121,7 +154,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 'label' => __('Size Image', 'post-grid-elementor-addon'),
                 'type' => Controls_Manager::SLIDER,
                 'default' => [
-                    'size' => 15,
+                    'size' => 100,
                 ],
                 'range' => [
                     'px' => [
@@ -135,6 +168,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 ],
             ]
         );
+        $this->box_border($name, $label, $class);
         $this->end_controls_section();
 
 
@@ -169,7 +203,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
     {
         $name = 'box_slide';
         $label = ucfirst($name);
-        $class = '.pssa .wrapper-in';
+        $class = '.wrapper-in';
 
         $this->start_controls_section(
             'section_slider_box_style',
@@ -187,7 +221,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 'label_off' => __('Hide', 'post-grid-elementor-addon'),
                 'default' => 'no',
                 'selectors' => [
-                    '{{WRAPPER}} .pssa .content_text' => 'height: fit-content;',
+                    '{{WRAPPER}} .content_text' => 'height: fit-content;',
                 ],
                 'separator' => 'before',
             ]
@@ -214,10 +248,12 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 ],
             ]
         );
+        $this->responsive_margin($name, $label, '.pssa article');
         $this->responsive_padding($name, $label, $class);
         $this->background_color($name, $label, '.pssa article');
-        $this->box_border($name, $label, $class);
+        $this->box_border($name, $label, '.wrapper');
         $this->end_controls_section();
+
     }
 
 // todo
@@ -243,6 +279,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
     /**
      * Content Layout Options.
      */
+
     protected function section_layout_options()
     {
         $this->start_controls_section(
@@ -341,8 +378,8 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
             [
                 'label' => __('slidesToShow', 'post-slick-slider-elementor-addon'),
                 'type' => Controls_Manager::SELECT,
-                'default' => '3',
-                'tablet_default' => '2',
+                'default' => '1',
+                'tablet_default' => '1',
                 'mobile_default' => '1',
                 'options' => [
                     '1' => '1',
@@ -361,8 +398,8 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
             [
                 'label' => __('slidesToscroll', 'post-slick-slider-elementor-addon'),
                 'type' => Controls_Manager::SELECT,
-                'default' => '3',
-                'tablet_default' => '2',
+                'default' => '1',
+                'tablet_default' => '1',
                 'mobile_default' => '1',
                 'options' => [
                     '1' => '1',
@@ -434,7 +471,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 'type' => Controls_Manager::SWITCHER,
                 'label_on' => __('On', 'post-slick-slider-elementor-addon'),
                 'label_off' => __('Off', 'post-slick-slider-elementor-addon'),
-                'default' => 'yes',
+                'default' => 'no',
                 'separator' => 'before',
             ]
         );
@@ -452,6 +489,51 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 ],
 
 
+            ]
+        );
+        $this->add_control(
+            'center_mode',
+            [
+                'label' => __('Center mode', 'post-slick-slider-elementor-addon'),
+                'type' => Controls_Manager::SWITCHER,
+                'default' => 'yes',
+                'frontend_available' => true,
+            ]
+        );
+        $this->add_responsive_control(
+            'master_slave',
+            [
+                'label' => __('Master or Slave', 'post-slick-slider-elementor-addon'),
+                'type' => Controls_Manager::SWITCHER,
+                'default' => 'yes',
+                'tablet_default' => 'yes',
+                'mobile_default' => 'yes',
+//                'prefix_class' => 'elementor-grid%s-',
+                'frontend_available' => false,
+            ]
+        );
+        $this->add_control(
+            'name_this_slider',
+            [
+                'label' => __('Введите имя этого слайдера', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'description' => 'Name slider <span style="font-size: 14px; color: red; font-weight: bold; letter-spacing: 3px; ">MUST BE UNIQUE!!!! </span> for this slider only  [a-zA-Z]',
+
+                'condition' => [
+                    'master_slave' => 'yes',
+                ],
+            ]
+        );
+        $this->add_control(
+            'class_master_slave',
+            [
+                'label' => __('Введите имя прикрепленного слайдера', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'condition' => [
+                    'master_slave' => 'yes',
+                ],
             ]
         );
         $this->end_controls_section();
@@ -609,7 +691,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         $all_posts = new \WP_Query($query_args);
         $breakpoints = Responsive::get_editable_breakpoints();
         $set_slider = array(
-            'arrow' => $settings['arrow'] === 'yes' ? true : false,
+            'arrows' => $settings['arrow'] === 'yes' ? true : false,
             'dots' => $settings['dots'] === 'yes' ? true : false,
             'slidesToShow' => intval($settings['slidesToShow']),
             'slidesToScroll' => intval($settings['scroll']),
@@ -618,7 +700,8 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
             'infinity' => $settings['infinity'] === 'yes' ? true : false,
             'autoplay' => $settings['auto_play'] === 'yes' ? true : false,
             'autoplaySpeed' => intval($settings['speed_auto_play']),
-
+            'asNavFor' => $settings['master_slave'] === 'yes' ? '.' . $settings['class_master_slave'] : '',
+            'centerMode' => $settings['center_mode'] === 'yes' ? true : false,
             'responsive' => array(
                 array(
                     'breakpoint' => $breakpoints['lg'],
@@ -887,9 +970,9 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         $this->add_group_control(
             \Elementor\Group_Control_Box_Shadow::get_type(),
             [
-                'name' => 'box_shadow',
+                'name' => 'box_shadow'.$name,
                 'label' => __('Box Shadow', 'plugin-domain'),
-                'selector' => '{{WRAPPER}} .wrapper',
+                'selector' => '{{WRAPPER}} '.$class,
             ]
         );
     }
@@ -906,6 +989,160 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
             ]
         );
     }
+
+    private function section_style_arrow()
+    {
+        $this->start_controls_section(
+            'section_slider_box_styles',
+            [
+                'label' => __('Style arr','post-grid-elementor-addon'),
+                'tab' => Controls_Manager::TAB_STYLE,
+            ]
+        );
+        $this->add_control(
+            'arrow_img',
+            [
+                'label' => __( 'Image Arrow', 'post-grid-elementor-addon' ),
+                'type' => Controls_Manager::MEDIA,
+
+                'title' => __( 'Background Image', 'post-grid-elementor-addon' ),
+                'selectors' => [
+//
+////                $ss.' > .slick-arrow' => 'top: 50%; position: absolute; z-index: 10;font-size: 0;width: 60px;height: 30px;border: none;',
+                   '{{WRAPPER}} .slick-arrow.slick-prev ' => 'background: url("{{URL}}")  no-repeat;left: 0; position: absolute; z-index: 10;font-size: 0;border: none; background-size:contain',
+                '{{WRAPPER}} .slick-arrow.slick-next ' => 'background: url("{{URL}}")  no-repeat; right: 0;transform: scale(-1, 1); position: absolute; z-index: 10;font-size: 0;border: none;background-size:contain',
+                ],
+            ]);
+        $this->add_control(
+            'h_size_arrow',
+            [
+                'label' => __('Height Arrov', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SLIDER,
+                'default' => [
+                    'size' => 15,
+                ],
+                'range' => [
+                    'px' => [
+                        'min' => 0,
+                        'max' => 500,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}}  .slick-arrow.slick-prev ' => 'height: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}}  .slick-arrow.slick-next ' => 'height: {{SIZE}}{{UNIT}};',
+
+                ],
+            ]
+        );
+        $this->add_control(
+            'w_size_arrow',
+            [
+                'label' => __('Width Arrov', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SLIDER,
+                'default' => [
+                    'size' => 15,
+                ],
+                'range' => [
+                    'px' => [
+                        'min' => -500,
+                        'max' => 500,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}}  .slick-arrow.slick-prev ' => 'width: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}}  .slick-arrow.slick-next ' => 'width: {{SIZE}}{{UNIT}};',
+
+                ],
+            ]
+        );
+        $this->add_control(
+            'pos_l_arrow_prev',
+            [
+                'label' => __('pos left Arrov prev', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SLIDER,
+                'default' => [
+                    'size' => 15,
+                ],
+                'range' => [
+                    'px' => [
+                        'min' => -500,
+                        'max' => 500,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}}  .slick-arrow.slick-prev ' => 'left: {{SIZE}}{{UNIT}};',
+//                    '{{WRAPPER}} ' . $ss.' .slick-arrow.slick-next ' => 'width: {{SIZE}}{{UNIT}};',
+
+                ],
+            ]
+        );
+        $this->add_control(
+            'pos_t_arrow_prev',
+            [
+                'label' => __('pos top Arrov prev', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SLIDER,
+                'default' => [
+                    'size' => 15,
+                ],
+                'range' => [
+                    'px' => [
+                        'min' => -500,
+                        'max' => 500,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}}  .slick-arrow.slick-prev ' => 'top: {{SIZE}}{{UNIT}};',
+//                    '{{WRAPPER}} ' . $ss.' .slick-arrow.slick-next ' => 'width: {{SIZE}}{{UNIT}};',
+
+                ],
+            ]
+        );
+        $this->add_control(
+            'pos_l_arrow_next',
+            [
+                'label' => __('pos left Arrov next', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SLIDER,
+                'default' => [
+                    'size' => 15,
+                ],
+                'range' => [
+                    'px' => [
+                        'min' => -500,
+                        'max' => 500,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}}  .slick-arrow.slick-next ' => 'left: {{SIZE}}{{UNIT}};',
+//                    '{{WRAPPER}} ' . $ss.' .slick-arrow.slick-next ' => 'width: {{SIZE}}{{UNIT}};',
+
+                ],
+            ]
+        );
+        $this->add_control(
+            'pos_t_arrow_next',
+            [
+                'label' => __('pos top Arrov next', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SLIDER,
+                'default' => [
+                    'size' => 15,
+                ],
+                'range' => [
+                    'px' => [
+                        'min' => -500,
+                        'max' => 500,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}}  .slick-arrow.slick-next ' => 'top: {{SIZE}}{{UNIT}};',
+//                    '{{WRAPPER}} ' . $ss.' .slick-arrow.slick-next ' => 'width: {{SIZE}}{{UNIT}};',
+
+                ],
+            ]
+        );
+        $this->end_controls_section();
+    }
+
+
 //    public function __construct($data = [], $args = null)
 //    {
 //        parent::__construct($data, $args);

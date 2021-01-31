@@ -1,26 +1,21 @@
-console.log("скрипт загружен 1");
+console.log("скрипт загружен tf");
 
 jQuery(document).ready(function ($) {
     console.log("запущен tf");
-//     //
-    elementorFrontend.hooks.addAction('frontend/element_ready/widget', function ($scope) {
+
+    elementorFrontend.hooks.addAction('frontend/element_ready/widget', function (scope) {
         console.log("element ready");
-
         var items = $('.pssa');
-        // console.log(items);
-        var z=0;
         for (var i of items) {
-            // console.log(i.getAttribute('id'));
-            // $(i).removeClass('slider');
-            var clss = i.getAttribute('id').toString();
-            // console.log(clss);
+            // console.log(i);
+            var clss = i.getAttribute('data-id').toString();
+            if ($(i).hasClass(clss)) {
+                $('.' + clss).slick('unslick');
+            }
             $(i).addClass(clss);
-            var data_pss =  JSON.parse(i.getAttribute('data-set-ss'));
-            // console.log(i.getAttribute('data-set-ss'));
-            console.log(data_pss);
-            // console.log(++z);
-            $('.'+clss).slick(data_pss);
+            data_pss = JSON.parse(i.getAttribute('data-set-ss'));
+            console.log('создаем слайдер -- ', clss);
+            $('.' + clss).slick(data_pss);
         }
-
     });
 });
