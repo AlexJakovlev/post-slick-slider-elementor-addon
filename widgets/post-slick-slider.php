@@ -271,6 +271,8 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
             ]
         );
         $this->background_color($name, $label, $class);
+        $this->typography('header', 'Header', '.header');
+        $this->responsive_margin('header', 'Header', '.header');;
         $this->end_controls_section();
 
     }
@@ -316,6 +318,17 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
             ]
         );
         $this->add_control(
+            'img',
+            [
+                'label' => __('IMG ', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'post-grid-elementor-addon'),
+                'label_off' => __('Hide', 'post-grid-elementor-addon'),
+                'default' => 'yes',
+                'separator' => 'before',
+            ]
+        );
+        $this->add_control(
             'meta_data',
             [
                 'label' => __('Meta Data', 'post-grid-elementor-addon'),
@@ -336,7 +349,28 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 ]
             ]
         );
-
+        $this->add_control(
+            'show_title',
+            [
+                'label' => __('Show Title', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'post-grid-elementor-addon'),
+                'label_off' => __('Hide', 'post-grid-elementor-addon'),
+                'default' => 'yes',
+                'separator' => 'before',
+            ]
+        );
+        $this->add_control(
+            'show_excerpt',
+            [
+                'label' => __('Show excerpt', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'post-grid-elementor-addon'),
+                'label_off' => __('Hide', 'post-grid-elementor-addon'),
+                'default' => 'yes',
+                'separator' => 'before',
+            ]
+        );
 //        $this->add_group_control(
 //            Group_Control_Image_Size::get_type(),
 //            [
@@ -745,14 +779,15 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         if ($settings['header'] != 'yes') return;
 
 
-        echo '<' . $settings['tag_header'] . '>' . $settings['text_header'] . '</' . $settings['tag_header'] . '>';
+        echo '<' . $settings['tag_header'] . ' class="header">' . $settings['text_header'] . '</' . $settings['tag_header'] . '>';
 
 
     }
 
     protected function render_thumbnail()
     {
-
+        $settings = $this->get_settings();
+        if ($settings['img'] != 'yes') return;
 //        $settings = $this->get_settings();
 //
 //        $show_image = $settings['show_image'];
@@ -777,6 +812,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
     protected function render_title()
     {
         $settings = $this->get_settings();
+        if ($settings['show_title'] != 'yes') return;
         $tag = $settings['tag_title'];
         echo sprintf('<%1$s class="title">%2$s</%3$s>', $tag, esc_html(get_the_title()), $tag);
 
@@ -844,6 +880,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
     protected function render_excerpt()
     {
         $settings = $this->get_settings();
+        if ($settings['show_excerpt'] != 'yes') return;
         $tag = $settings['tag_excerpt'];
         echo sprintf('<%1$s class="excerpt">%2$s</%3$s>', $tag, esc_html(get_the_excerpt()), $tag);
     }
@@ -866,7 +903,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                     'span' => 'span',
                     'p' => 'p',
                 ],
-                'default' => 'h3',
+                'default' => 'h6',
                 'condition' => [
                     $name => 'yes',
                 ],
@@ -892,7 +929,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                     'span' => 'span',
                     'p' => 'p',
                 ],
-                'default' => 'h3',
+                'default' => 'h6',
 
             ]
         );
