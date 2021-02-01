@@ -127,6 +127,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         $this->section_style_arrow();
         $this->section_style_image();
         $this->section_style_content();
+        $this->section_style_readmore();
 //        die;
     }
 
@@ -134,7 +135,101 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
     {
 
     }
+    private function section_style_readmore()
+    {
+        // Tab.
+        $this->start_controls_section(
+            'section_grid_readmore_style',
+            [
+                'label' => __('Read More', 'post-grid-elementor-addon'),
+                'tab' => Controls_Manager::TAB_STYLE,
+                'condition' => [
+                        'show_read_more' => 'yes'
+                ],
+            ]
+        );
 
+        // Readmore typography.
+        $this->add_group_control(
+            Group_Control_Typography::get_type(),
+            [
+                'name' => 'grid_readmore_style_typography',
+                'scheme' => Scheme_Typography::TYPOGRAPHY_1,
+                'selector' => '{{WRAPPER}} a.ss-read-more-btn',
+            ]
+        );
+
+        $this->start_controls_tabs('sclick-slider_readmore_color_style');
+
+        // Normal tab.
+        $this->start_controls_tab(
+            'grid_readmore_style_normal',
+            array(
+                'label' => esc_html__('Normal', 'post-slick-slider-elementor-addon'),
+            )
+        );
+
+        // Readmore color.
+        $this->add_control(
+            'readmore_style_color',
+            [
+                'type' => Controls_Manager::COLOR,
+                'label' => __('Color', 'post-slick-slider-elementor-addon'),
+                'scheme' => [
+                    'type' => Scheme_Color::get_type(),
+                    'value' => Scheme_Color::COLOR_1,
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} a.ss-read-more-btn' => 'color: {{VALUE}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_tab();
+
+        // Hover tab.
+        $this->start_controls_tab(
+            'grid_readmore_style_color_hover_tab',
+            array(
+                'label' => esc_html__('Hover', 'post-slick-slider-elementor-addon'),
+            )
+        );
+
+        // Readmore hover color.
+        $this->add_control(
+            'readmore_style_hover_color',
+            array(
+                'type' => Controls_Manager::COLOR,
+                'label' => esc_html__('Color', 'post-slick-slider-elementor-addon'),
+                'scheme' => array(
+                    'type' => Scheme_Color::get_type(),
+                    'value' => Scheme_Color::COLOR_1,
+                ),
+                'selectors' => array(
+                    '{{WRAPPER}}  a.ss-read-more-btn:hover' => 'color: {{VALUE}};',
+                ),
+            )
+        );
+
+        $this->end_controls_tab();
+
+        $this->end_controls_tabs();
+
+        // Readmore margin
+        $this->add_responsive_control(
+            'readmore_style_margin',
+            [
+                'label' => __('Margin', 'post-slick-slider-elementor-addon'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'size_units' => ['px'],
+                'selectors' => [
+                    '{{WRAPPER}}  a.ss-read-more-btn' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                ],
+            ]
+        );
+
+        $this->end_controls_section();
+    }
     private function section_style_image()
     {
         $name = 'image';
@@ -371,6 +466,54 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 'label_on' => __('Show', 'post-grid-elementor-addon'),
                 'label_off' => __('Hide', 'post-grid-elementor-addon'),
                 'default' => 'yes',
+                'separator' => 'before',
+            ]
+        );
+        $this->add_control(
+            'show_read_more',
+            [
+                'label' => __('Read More', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'post-grid-elementor-addon'),
+                'label_off' => __('Hide', 'post-grid-elementor-addon'),
+                'default' => 'no',
+                'separator' => 'before',
+            ]
+        );
+        $this->add_control(
+            'read_more_text',
+            [
+                'label' => __('Read More Text', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::TEXT,
+                'default' => __('Read More »', 'post-grid-elementor-addon'),
+                'condition' => [
+                    'show_read_more' => 'yes',
+                ],
+            ]
+        );
+        $this->add_control(
+            'content_align',
+            [
+                'label' => __('Alignment', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => __('Left', 'post-grid-elementor-addon'),
+                        'icon' => 'fa fa-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'post-grid-elementor-addon'),
+                        'icon' => 'fa fa-align-center',
+                    ],
+                    'right' => [
+                        'title' => __('Right', 'post-grid-elementor-addon'),
+                        'icon' => 'fa fa-align-right',
+                    ],
+                ],
+                'default' => 'left',
+                'selectors' => [
+                    '{{WRAPPER}} ' => 'text-align: {{VALUE}};',
+                ],
                 'separator' => 'before',
             ]
         );
@@ -887,7 +1030,26 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         $tag = $settings['tag_excerpt'];
         echo sprintf('<%1$s class="excerpt">%2$s</%3$s>', $tag, esc_html(get_the_excerpt()), $tag);
     }
+    protected function render_readmore()
+    {
 
+        $settings = $this->get_settings();
+
+        $show_read_more = $settings['show_read_more'];
+        $read_more_text = $settings['read_more_text'];
+
+        if ('yes' !== $show_read_more) {
+            return;
+        }
+        ?>
+
+        <div class="ss-wrapper-read-more-btn">
+            <a class="ss-read-more-btn" style="position: relative"  href="<?php the_permalink(); ?>"><?php echo $read_more_text ?></a>
+        </div>
+
+        <?php
+
+    }
     protected function htag($name)
     {
         $this->add_control(
