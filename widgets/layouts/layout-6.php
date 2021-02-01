@@ -40,4 +40,5 @@ if ($settings['master_slave'] === 'yes') {
             </div>
         </div>
     </div>
+
 <?php

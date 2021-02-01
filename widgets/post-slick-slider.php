@@ -676,7 +676,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
             [
                 'label' => __('Center mode', 'post-slick-slider-elementor-addon'),
                 'type' => Controls_Manager::SWITCHER,
-                'default' => 'yes',
+                'default' => 'no',
                 'frontend_available' => true,
             ]
         );
@@ -685,9 +685,9 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
             [
                 'label' => __('Master or Slave', 'post-slick-slider-elementor-addon'),
                 'type' => Controls_Manager::SWITCHER,
-                'default' => 'yes',
-                'tablet_default' => 'yes',
-                'mobile_default' => 'yes',
+                'default' => 'no',
+                'tablet_default' => 'no',
+                'mobile_default' => 'no',
 //                'prefix_class' => 'elementor-grid%s-',
                 'frontend_available' => false,
             ]
