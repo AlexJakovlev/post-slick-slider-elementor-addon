@@ -272,7 +272,9 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         );
         $this->background_color($name, $label, $class);
         $this->typography('header', 'Header', '.header');
-        $this->responsive_margin('header', 'Header', '.header');;
+        $this->responsive_margin('header', 'Header', '.header');
+        $this->alignment('header', 'Header', '.header');
+
         $this->end_controls_section();
 
     }
@@ -306,6 +308,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
 
         $this->htag('header');
         $this->text('header');
+
         $this->add_control(
             'show_meta',
             [
@@ -1026,7 +1029,36 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
             ]
         );
     }
-
+private function alignment($name,$label,$class){
+    $this->add_responsive_control(
+        'align_'.$name,
+        [
+            'label' => __( 'Alignment '.$label, 'elementor' ),
+            'type' => Controls_Manager::CHOOSE,
+            'options' => [
+                'left' => [
+                    'title' => __( 'Left', 'elementor' ),
+                    'icon' => 'eicon-text-align-left',
+                ],
+                'center' => [
+                    'title' => __( 'Center', 'elementor' ),
+                    'icon' => 'eicon-text-align-center',
+                ],
+                'right' => [
+                    'title' => __( 'Right', 'elementor' ),
+                    'icon' => 'eicon-text-align-right',
+                ],
+                'justify' => [
+                    'title' => __( 'Justified', 'elementor' ),
+                    'icon' => 'eicon-text-align-justify',
+                ],
+            ],
+            'selectors' => [
+                '{{WRAPPER}} '.$class => 'text-align: {{VALUE}};',
+            ],
+        ]
+    );
+}
     private function section_style_arrow()
     {
         $this->start_controls_section(
