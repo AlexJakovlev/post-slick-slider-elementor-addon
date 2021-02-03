@@ -1,5 +1,5 @@
 <?php
-
+$name_slider = '';
 $tt = json_encode($set_slider);
 if ($settings['master_slave'] === 'yes') {
     $name_slider = $settings['name_this_slider'];

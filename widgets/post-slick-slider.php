@@ -135,6 +135,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
     {
 
     }
+
     private function section_style_readmore()
     {
         // Tab.
@@ -144,7 +145,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 'label' => __('Read More', 'post-grid-elementor-addon'),
                 'tab' => Controls_Manager::TAB_STYLE,
                 'condition' => [
-                        'show_read_more' => 'yes'
+                    'show_read_more' => 'yes'
                 ],
             ]
         );
@@ -230,6 +231,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
 
         $this->end_controls_section();
     }
+
     private function section_style_image()
     {
         $name = 'image';
@@ -259,6 +261,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 ],
                 'selectors' => [
                     '{{WRAPPER}} ' . $class => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} .wrapper_img' => 'width: {{SIZE}}{{UNIT}}',
 
                 ],
             ]
@@ -321,6 +324,119 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 'separator' => 'before',
             ]
         );
+
+        //todo
+        $this->add_control(
+            'chess_box_slider' . $name,
+            [
+                'label' => __('Chess ' . $label, 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'post-grid-elementor-addon'),
+                'label_off' => __('Hide', 'post-grid-elementor-addon'),
+                'default' => 'no',
+                'selectors' => [
+                    '{{WRAPPER}} .pssa .slick-track .slick-slide ' => 'display: flex; flex-direction: column; flex-wrap:wrap;',
+                ],
+                'separator' => 'before',
+            ]
+        );
+        $this->add_control(
+            'size_box_slider_all',
+            [
+                'label' => __('All', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SLIDER,
+                'default' => [
+                    'size' => 80,
+                ],
+                'size_units' => ['px', '%'],
+                'range' => [
+                    '%' => [
+                        'min' => 0,
+                        'max' => 100,
+                    ],
+                    'px' => [
+                        'min' => 0,
+                        'max' => 1200,
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .pssa .slick-track .slick-slide > div' => 'width: {{SIZE}}{{UNIT}}; overflow: hidden',
+                ],
+                'condition' => [
+                    'chess_box_slider' . $name => 'yes'
+                ],
+            ]
+        );
+        $this->add_responsive_control(
+            'first_align_chess' ,
+            [
+                'label' => __('Alignment first' . $label, 'elementor'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'flex-start' => [
+                        'title' => __('Left', 'elementor'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'elementor'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'flex-end' => [
+                        'title' => __('Right', 'elementor'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .pssa .slick-track .slick-slide > div:nth-child(odd) ' => 'align-self: {{VALUE}};',
+                ],
+                'condition' => [
+                    'chess_box_slider' . $name => 'yes'
+                ],
+            ]
+
+        );
+        $this->add_responsive_control(
+            'second_align_chess',
+            [
+                'label' => __('Alignment second' . $label, 'elementor'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'flex-start' => [
+                        'title' => __('Left', 'elementor'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'elementor'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'flex-end' => [
+                        'title' => __('Right', 'elementor'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .pssa .slick-track .slick-slide > div:nth-child(even) ' => 'align-self: {{VALUE}};',
+                ],
+                'condition' => [
+                    'chess_box_slider' . $name => 'yes'
+                ],
+            ]
+
+        );
+        $this->add_control(
+            'full_width_content' . $name,
+            [
+                'label' => __('FULL width content ' . $label, 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'post-grid-elementor-addon'),
+                'label_off' => __('Hide', 'post-grid-elementor-addon'),
+                'default' => 'no',
+                'selectors' => [
+                    '{{WRAPPER}} .wrapper-in .content' => 'display: flex;',
+                ],
+                'separator' => 'before',
+            ]
+        );
         $this->add_control(
             'size_box_slider_' . 'content',
             [
@@ -343,6 +459,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 ],
             ]
         );
+
         $this->responsive_margin($name, $label, '.pssa article');
         $this->responsive_padding($name, $label, $class);
         $this->background_color($name, $label, '.pssa article');
@@ -568,6 +685,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                     '4' => '4',
                     '5' => '5',
                     '6' => '6',
+                    '7' => '7',
                 ],
 //                'prefix_class' => 'elementor-grid%s-',
                 'frontend_available' => true,
@@ -588,9 +706,30 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                     '4' => '4',
                     '5' => '5',
                     '6' => '6',
-                    '7' => '6',
+                    '7' => '7',
                 ],
 //                'prefix_class' => 'elementor-grid%s-',
+                'frontend_available' => true,
+            ]
+        );
+
+        $this->add_responsive_control(
+            'rows_slider',
+            [
+                'label' => __('rows', 'post-slick-slider-elementor-addon'),
+                'type' => Controls_Manager::SELECT,
+                'default' => '1',
+                'tablet_default' => '1',
+                'mobile_default' => '1',
+                'options' => [
+                    '1' => '1',
+                    '2' => '2',
+                    '3' => '3',
+                    '4' => '4',
+                    '5' => '5',
+                    '6' => '6',
+                    '7' => '7',
+                ],
                 'frontend_available' => true,
             ]
         );
@@ -882,6 +1021,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
             'autoplaySpeed' => intval($settings['speed_auto_play']),
             'asNavFor' => $settings['master_slave'] === 'yes' ? '.' . $settings['class_master_slave'] : '',
             'centerMode' => $settings['center_mode'] === 'yes' ? true : false,
+            'rows' => intval($settings['rows_slider']),
             'responsive' => array(
                 array(
                     'breakpoint' => $breakpoints['lg'],
@@ -1030,6 +1170,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         $tag = $settings['tag_excerpt'];
         echo sprintf('<%1$s class="excerpt">%2$s</%3$s>', $tag, esc_html(get_the_excerpt()), $tag);
     }
+
     protected function render_readmore()
     {
 
@@ -1044,12 +1185,14 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         ?>
 
         <div class="ss-wrapper-read-more-btn">
-            <a class="ss-read-more-btn" style="position: relative"  href="<?php the_permalink(); ?>"><?php echo $read_more_text ?></a>
+            <a class="ss-read-more-btn" style="position: relative"
+               href="<?php the_permalink(); ?>"><?php echo $read_more_text ?></a>
         </div>
 
         <?php
 
     }
+
     protected function htag($name)
     {
         $this->add_control(
@@ -1172,9 +1315,9 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         $this->add_group_control(
             \Elementor\Group_Control_Box_Shadow::get_type(),
             [
-                'name' => 'box_shadow'.$name,
+                'name' => 'box_shadow' . $name,
                 'label' => __('Box Shadow', 'plugin-domain'),
-                'selector' => '{{WRAPPER}} '.$class,
+                'selector' => '{{WRAPPER}} ' . $class,
             ]
         );
     }
@@ -1191,57 +1334,60 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
             ]
         );
     }
-private function alignment($name,$label,$class){
-    $this->add_responsive_control(
-        'align_'.$name,
-        [
-            'label' => __( 'Alignment '.$label, 'elementor' ),
-            'type' => Controls_Manager::CHOOSE,
-            'options' => [
-                'left' => [
-                    'title' => __( 'Left', 'elementor' ),
-                    'icon' => 'eicon-text-align-left',
+
+    private function alignment($name, $label, $class)
+    {
+        $this->add_responsive_control(
+            'align_' . $name,
+            [
+                'label' => __('Alignment ' . $label, 'elementor'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => __('Left', 'elementor'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'elementor'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => __('Right', 'elementor'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                    'justify' => [
+                        'title' => __('Justified', 'elementor'),
+                        'icon' => 'eicon-text-align-justify',
+                    ],
                 ],
-                'center' => [
-                    'title' => __( 'Center', 'elementor' ),
-                    'icon' => 'eicon-text-align-center',
+                'selectors' => [
+                    '{{WRAPPER}} ' . $class => 'text-align: {{VALUE}};',
                 ],
-                'right' => [
-                    'title' => __( 'Right', 'elementor' ),
-                    'icon' => 'eicon-text-align-right',
-                ],
-                'justify' => [
-                    'title' => __( 'Justified', 'elementor' ),
-                    'icon' => 'eicon-text-align-justify',
-                ],
-            ],
-            'selectors' => [
-                '{{WRAPPER}} '.$class => 'text-align: {{VALUE}};',
-            ],
-        ]
-    );
-}
+            ]
+        );
+    }
+
     private function section_style_arrow()
     {
         $this->start_controls_section(
             'section_slider_box_styles',
             [
-                'label' => __('Style arr','post-grid-elementor-addon'),
+                'label' => __('Style arr', 'post-grid-elementor-addon'),
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
         $this->add_control(
             'arrow_img',
             [
-                'label' => __( 'Image Arrow', 'post-grid-elementor-addon' ),
+                'label' => __('Image Arrow', 'post-grid-elementor-addon'),
                 'type' => Controls_Manager::MEDIA,
 
-                'title' => __( 'Background Image', 'post-grid-elementor-addon' ),
+                'title' => __('Background Image', 'post-grid-elementor-addon'),
                 'selectors' => [
 //
 ////                $ss.' > .slick-arrow' => 'top: 50%; position: absolute; z-index: 10;font-size: 0;width: 60px;height: 30px;border: none;',
-                   '{{WRAPPER}} .slick-arrow.slick-prev ' => 'background: url("{{URL}}")  no-repeat;left: 0; position: absolute; z-index: 10;font-size: 0;border: none; background-size:contain',
-                '{{WRAPPER}} .slick-arrow.slick-next ' => 'background: url("{{URL}}")  no-repeat; right: 0;transform: scale(-1, 1); position: absolute; z-index: 10;font-size: 0;border: none;background-size:contain',
+                    '{{WRAPPER}} .slick-arrow.slick-prev ' => 'background: url("{{URL}}")  no-repeat;left: 0; position: absolute; z-index: 10;font-size: 0;border: none; background-size:contain',
+                    '{{WRAPPER}} .slick-arrow.slick-next ' => 'background: url("{{URL}}")  no-repeat; right: 0;transform: scale(-1, 1); position: absolute; z-index: 10;font-size: 0;border: none;background-size:contain',
                 ],
             ]);
         $this->add_control(
