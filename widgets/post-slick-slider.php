@@ -1033,7 +1033,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 array(
                     'breakpoint' => $breakpoints['lg'],
                     'settings' => array(
-                        'arrow' => $settings['arrow_tablet'] === 'yes' ? true : false,
+                        'arrows' => $settings['arrow_tablet'] === 'yes' ? true : false,
                         'dots' => $settings['dots_tablet'] === 'yes' ? true : false,
                         'slidesToShow' => intval($settings['slidesToShow_tablet']),
                         'slidesToScroll' => intval($settings['scroll_tablet']),
@@ -1042,7 +1042,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 array(
                     'breakpoint' => $breakpoints['md'],
                     'settings' => array(
-                        'arrow' => $settings['arrow_mobile'] === 'yes' ? true : false,
+                        'arrows' => $settings['arrow_mobile'] === 'yes' ? true : false,
                         'dots' => $settings['dots_mobile'] === 'yes' ? true : false,
                         'slidesToShow' => intval($settings['slidesToShow_mobile']),
                         'slidesToScroll' => intval($settings['scroll_mobile']),
