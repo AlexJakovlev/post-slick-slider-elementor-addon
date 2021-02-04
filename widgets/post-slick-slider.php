@@ -245,15 +245,22 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 'tab' => Controls_Manager::TAB_STYLE,
             ]
         );
-        $this->add_control(
+        $this->add_responsive_control(
             'size_img',
             [
                 'label' => __('Size Image', 'post-grid-elementor-addon'),
                 'type' => Controls_Manager::SLIDER,
                 'default' => [
-                    'size' => 100,
+                    'unit' => 'px',
+                    'size' => 50,
                 ],
+                'size_units' => [ 'px', '%' ],
+
                 'range' => [
+                    '%' => [
+                        'min' => 0,
+                        'max' => 300,
+                    ],
                     'px' => [
                         'min' => 0,
                         'max' => 500,
@@ -368,7 +375,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
             ]
         );
         $this->add_responsive_control(
-            'first_align_chess' ,
+            'first_align_chess',
             [
                 'label' => __('Alignment first' . $label, 'elementor'),
                 'type' => Controls_Manager::CHOOSE,
