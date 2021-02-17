@@ -40,24 +40,6 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         return ['AJ'];
     }
 
-//    public function hexToStr()
-//    {
-//        $continue = true;
-//        $hex = hash('md5', uniqid('', true), false);
-//        $strr = '';
-////        while ($continue) {
-//
-//            for ($i = 0; $i < strlen($hex) - 1; $i += 2) {
-//                $strr .= chr(hexdec($hex[$i] . $hex[$i + 1]));
-//
-//            }
-////            $re = '/[a-zA-Z]+/';
-////            preg_match_all($re, $strr, $matches, PREG_SET_ORDER, 0);
-////            $continue = false;
-////        }
-//        return "ss".$strr;
-//    }
-
     public function __construct($data = [], $args = null)
     {
         parent::__construct($data, $args);
@@ -254,12 +236,12 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                     'unit' => 'px',
                     'size' => 50,
                 ],
-                'size_units' => [ 'px', '%' ],
+                'size_units' => ['px', '%'],
 
                 'range' => [
                     '%' => [
                         'min' => 0,
-                        'max' => 300,
+                        'max' => 100,
                     ],
                     'px' => [
                         'min' => 0,
@@ -267,13 +249,40 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                     ],
                 ],
                 'selectors' => [
-                    '{{WRAPPER}} ' . $class => 'height: {{SIZE}}{{UNIT}}; width: {{SIZE}}{{UNIT}}',
-                    '{{WRAPPER}} .wrapper_img' => 'width: {{SIZE}}{{UNIT}}',
+                    '{{WRAPPER}} a' => 'height: {{SIZE}}{{UNIT}}; width:  {{SIZE}}{{UNIT}}',
+//                    '{{WRAPPER}} .content_text' => 'width: calc(100% - {{SIZE}}{{UNIT}});',
 
                 ],
             ]
         );
         $this->box_border($name, $label, $class);
+        $this->add_control(
+            'img_align',
+            [
+                'label' => __('Alignment', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'flex-start' => [
+                        'title' => __('Left', 'post-grid-elementor-addon'),
+                        'icon' => 'fa fa-align-left',
+                    ],
+                    'center' => [
+                        'title' => __('Center', 'post-grid-elementor-addon'),
+                        'icon' => 'fa fa-align-center',
+                    ],
+                    'flex-end' => [
+                        'title' => __('Right', 'post-grid-elementor-addon'),
+                        'icon' => 'fa fa-align-right',
+                    ],
+                ],
+                'default' => 'left',
+                'selectors' => [
+                    '{{WRAPPER}} .wrapper-in .content' => 'align-items: {{VALUE}};',
+
+                ],
+                'separator' => 'after',
+            ]
+        );
         $this->end_controls_section();
 
 
@@ -296,6 +305,9 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         $this->htag2('title');
         $this->responsive_margin($name . 'title', $label . ' Title', $class . " .title");
         $this->typography($name . 'title', $label . ' Title', $class . " .title");
+        $this->responsive_margin($name . 'meta_pp', $label . ' Meta', $class . " .post-profession");
+        $this->htag2('meta_pp');
+        $this->typography($name . 'meta_pp', $label . ' Meta', $class . " .post-profession");
         $this->responsive_margin($name . 'excerpt', $label . ' Excerpt', $class . " .excerpt");
         $this->htag2('excerpt');
         $this->typography($name . 'excerpt', $label . ' Excerpt', $class . " .excerpt");
@@ -345,6 +357,9 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                     '{{WRAPPER}} .pssa .slick-track .slick-slide ' => 'display: flex; flex-direction: column; flex-wrap:wrap;',
                 ],
                 'separator' => 'before',
+                'condition' => [
+//                        'rows_slider!' => '1',
+                ],
             ]
         );
         $this->add_control(
@@ -440,6 +455,20 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 'default' => 'no',
                 'selectors' => [
                     '{{WRAPPER}} .wrapper-in .content' => 'display: flex;',
+                ],
+                'separator' => 'before',
+            ]
+        );
+        $this->add_control(
+            'direction collumn' . $name,
+            [
+                'label' => __('direction collumn' . $label, 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'post-grid-elementor-addon'),
+                'label_off' => __('Hide', 'post-grid-elementor-addon'),
+                'default' => 'no',
+                'selectors' => [
+                    '{{WRAPPER}} .wrapper-in .content' => 'flex-direction: column;',
                 ],
                 'separator' => 'before',
             ]
@@ -564,6 +593,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                     'categories' => __('Categories', 'post-grid-elementor-addon'),
                     'comments' => __('Comments', 'post-grid-elementor-addon'),
                     'testimonial' => __('Testimonial', 'post-grid-elementor-addon'),
+                    'profession' => __('Profession', 'post-grid-elementor-addon')
                 ],
                 'separator' => 'before',
                 'condition' => [
@@ -636,7 +666,8 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 ],
                 'default' => 'left',
                 'selectors' => [
-                    '{{WRAPPER}} ' => 'text-align: {{VALUE}};',
+                    '{{WRAPPER}} .wrapper-in .content' => 'text-align: {{VALUE}};',//align-items: {{VALUE}};',
+
                 ],
                 'separator' => 'before',
             ]
@@ -879,6 +910,17 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         );
         // Post categories get_post_types( $args = array(), $output = 'names', $operator = 'and' );
         $this->add_control(
+            'dynamic_content',
+            [
+                'label' => __('Dinamic content ', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::SWITCHER,
+                'label_on' => __('Show', 'post-grid-elementor-addon'),
+                'label_off' => __('Hide', 'post-grid-elementor-addon'),
+                'default' => 'yes',
+
+            ]
+        );
+        $this->add_control(
             'type_post',
             [
                 'label' => __('Type POST!! ', 'post-grid-elementor-addon'),
@@ -891,6 +933,9 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 'default' => 'post',
 
                 'options' => get_post_types($args = array(), $output = 'names', $operator = 'and'),
+                'condition' => [
+                    'dynamic_content' => 'yes'
+                ]
 
             ]
         );
@@ -903,8 +948,12 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                 'type' => Controls_Manager::SELECT2,
                 'multiple' => true,
                 'options' => $this->wpcap_get_all_post_categories(),
+                'condition' => [
+                    'dynamic_content' => 'yes'
+                ]
 
             ]
+
         );
 
         $this->add_control(
@@ -912,6 +961,9 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
             [
                 'label' => __('Advanced', 'post-grid-elementor-addon'),
                 'type' => Controls_Manager::HEADING,
+                'condition' => [
+                    'dynamic_content' => 'yes'
+                ]
             ]
         );
 
@@ -926,6 +978,9 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                     'post_title' => __('Title', 'post-grid-elementor-addon'),
                     'rand' => __('Random', 'post-grid-elementor-addon'),
                 ],
+                'condition' => [
+                    'dynamic_content' => 'yes'
+                ]
             ]
         );
 
@@ -939,6 +994,21 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                     'asc' => __('ASC', 'post-grid-elementor-addon'),
                     'desc' => __('DESC', 'post-grid-elementor-addon'),
                 ],
+                'condition' => [
+                    'dynamic_content' => 'yes'
+                ]
+            ]
+        );
+        $this->add_control(
+            'post_ids',
+            [
+                'label' => __('Post ID\'s', 'post-grid-elementor-addon'),
+                'type' => Controls_Manager::TEXT,
+                'default' => '',
+                'description' => 'enter ID\'s post  ( 10,20,500)',
+                'condition' => [
+                    'dynamic_content!' => 'yes'
+                ]
             ]
         );
         $this->end_controls_section();
@@ -995,24 +1065,34 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
 
         $cats = is_array($settings['post_categories']) ? implode(',', $settings['post_categories']) : $settings['post_categories'];
 
-        $query_args = array(
-            'posts_per_page' => -1,
-            'no_found_rows' => true,
-            'post__not_in' => get_option('sticky_posts'),
-            'ignore_sticky_posts' => true,
-            'category_name' => $cats,
-            'post_type' => $this->get_settings()['type_post'],
-        );
+        if ($settings['dynamic_content'] === 'yes') {
+            $query_args = array(
+                'posts_per_page' => -1,
+                'no_found_rows' => true,
+                'post__not_in' => get_option('sticky_posts'),
+                'ignore_sticky_posts' => true,
+                'category_name' => $cats,
+                'post_type' => $this->get_settings()['type_post'],
+            );
+            if (!empty($settings['orderby'])) {
+                $query_args['orderby'] = $settings['orderby'];
+            }
 
-        // Order by.
-        if (!empty($settings['orderby'])) {
-            $query_args['orderby'] = $settings['orderby'];
+            // Order .
+            if (!empty($settings['order'])) {
+                $query_args['order'] = $settings['order'];
+            }
+        } else {
+            $query_args = array(
+
+                'post__in' => explode(',', $this->get_settings()['post_ids']),
+                'post_type' => 'post',
+                'orderby' => 'post__in',
+                'suppress_filters' => true
+            );
         }
 
-        // Order .
-        if (!empty($settings['order'])) {
-            $query_args['order'] = $settings['order'];
-        }
+
 //         get_post_types( $args = array(), $output = 'names', $operator = 'and' );
         $all_posts = new \WP_Query($query_args);
         $breakpoints = Responsive::get_editable_breakpoints();
@@ -1037,6 +1117,7 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                         'dots' => $settings['dots_tablet'] === 'yes' ? true : false,
                         'slidesToShow' => intval($settings['slidesToShow_tablet']),
                         'slidesToScroll' => intval($settings['scroll_tablet']),
+                        'rows' => intval($settings['rows_slider_tablet']),
                     ),
                 ),
                 array(
@@ -1046,11 +1127,10 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
                         'dots' => $settings['dots_mobile'] === 'yes' ? true : false,
                         'slidesToShow' => intval($settings['slidesToShow_mobile']),
                         'slidesToScroll' => intval($settings['scroll_mobile']),
+                        'rows' => intval($settings['rows_slider_mobile']),
                     ),
                 ),
             ),
-//            'mobileFirst' => true,
-            // appendArrows: $(".content_arrow_slick"),
         );
         if ($all_posts->have_posts()) :
 
@@ -1063,7 +1143,8 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         <!--            </div>-->
         <!--        </div>-->
         <?php
-
+        wp_reset_query();
+        wp_reset_postdata();
     }
 
     protected function render_header()
@@ -1107,8 +1188,9 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         $settings = $this->get_settings();
         if ($settings['show_title'] != 'yes') return;
         $tag = $settings['tag_title'];
+        echo '<a href="' .esc_html( get_the_permalink()) . '">';
         echo sprintf('<%1$s class="title">%2$s</%3$s>', $tag, esc_html(get_the_title()), $tag);
-
+        echo '</a>';
     }
 
     protected function render_meta()
@@ -1121,52 +1203,62 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
 //            return;
 //        }
         ?>
-        <div class="post-grid-meta">
+        <!--        <div class="post-grid-meta">-->
+        <?php
+        if (in_array('author', $meta_data)) { ?>
+
+            <span class="post-author"><?php the_author(); ?></span>
+
             <?php
-            if (in_array('author', $meta_data)) { ?>
+        }
 
-                <span class="post-author"><?php the_author(); ?></span>
+        if (in_array('date', $meta_data)) { ?>
 
-                <?php
+            <span class="post-author"><?php echo apply_filters('the_date', get_the_date(), get_option('date_format'), '', ''); ?></span>
+
+            <?php
+        }
+
+        if (in_array('categories', $meta_data)) {
+
+            $categories_list = get_the_category_list(esc_html__(', ', 'post-grid-elementor-addon'));
+
+            if ($categories_list) {
+                printf('<span class="post-categories">%s</span>', $categories_list); // WPCS: XSS OK.
             }
 
-            if (in_array('date', $meta_data)) { ?>
+        }
 
-                <span class="post-author"><?php echo apply_filters('the_date', get_the_date(), get_option('date_format'), '', ''); ?></span>
+        if (in_array('comments', $meta_data)) { ?>
 
-                <?php
-            }
+            <span class="post-comments"><?php comments_number(); ?></span>
 
-            if (in_array('categories', $meta_data)) {
-
-                $categories_list = get_the_category_list(esc_html__(', ', 'post-grid-elementor-addon'));
-
-                if ($categories_list) {
-                    printf('<span class="post-categories">%s</span>', $categories_list); // WPCS: XSS OK.
-                }
-
-            }
-
-            if (in_array('comments', $meta_data)) { ?>
-
-                <span class="post-comments"><?php comments_number(); ?></span>
-
-                <?php
-            }
-            if (in_array('testimonial', $meta_data)) {
-                $meta = get_post_meta(get_the_ID(), 'testimonial');
-                if ($meta) {
-                    $meta = $meta[0];
-                    ?>
-
-                    <span class="post-testimonia"><?php echo $meta['profession_key'] ?></span>
-                    <span class="post-testimonia"><?php echo $meta['company_key'] ?></span>
-
-                    <?php
-                }
-            }
+            <?php
+        }
+        if (in_array('profession', $meta_data)) {
+            $prof = get_post_meta(get_the_ID(), 'profession');
+            if (isset($prof[0])) {
             ?>
-        </div>
+
+            <span class="post-profession"><?php echo $prof[0] ?></span>
+
+            <?php
+            }
+        }
+        if (in_array('testimonial', $meta_data)) {
+            $meta = get_post_meta(get_the_ID(), 'testimonial');
+            if ($meta) {
+                $meta = $meta[0];
+                ?>
+
+                <span class="post-testimonia"><?php echo $meta['profession_key'] ?></span>
+                <span class="post-testimonia"><?php echo $meta['company_key'] ?></span>
+
+                <?php
+            }
+        }
+        ?>
+        <!--        </div>-->
         <?php
     }
 
@@ -1526,18 +1618,5 @@ class Elementor_Post_Slick_Slider_Widget extends Widget_Base
         $this->end_controls_section();
     }
 
-
-//    public function __construct($data = [], $args = null)
-//    {
-//        parent::__construct($data, $args);
-//        wp_register_script('script-handlerrr', plugins_url('/post-slick-slider-elementor-addon/assets/js/slick.min.js'), ['elementor-frontend'], '1.0.0', true);
-//
-//        wp_register_script('script-handlerr', plugins_url('/post-slick-slider-elementor-addon/assets/js/my_script_tf.js'), ['elementor-frontend', 'script-handlerrr'], '1.0.0', true);
-//    }
-//
-//    public function get_script_depends()
-//    {
-//        return ['script-handlerr', 'script-handlerrr'];
-//    }
 }
 
